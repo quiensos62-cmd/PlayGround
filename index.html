@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101510" />
+  <title>Plaguefall — Last Light at Blackthorn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-shell">
+    <header class="topbar">
+      <div class="brand-lockup"><div class="crest"><span>✦</span></div><div><div class="brand-name">PLAGUEFALL <span>TACTICAL</span></div><div class="brand-sub">THE BLACKTHORN QUARANTINE</div></div></div>
+      <div class="mission-heading"><span class="live-dot"></span><div><b>OPERATION: LAST LIGHT</b><small>BLACKTHORN · NORTHERN LORDAERON</small></div></div>
+      <div class="top-stats"><div class="stat"><span class="stat-icon wood-icon">▰</span><span id="supply">35</span><small>SUPPLIES</small></div><div class="stat"><span class="stat-icon skull-icon">☠</span><span id="kills">0</span><small>ELIMINATED</small></div><div class="clock-wrap"><div class="clock" id="clock">00:00</div><small>ELAPSED</small></div><button class="icon-button" id="pauseButton" aria-label="Pause game">Ⅱ</button></div>
+    </header>
+    <section class="mission-strip"><div class="mission-mark">I</div><div class="mission-copy"><b>SECURE THE QUARANTINE ZONE</b><span id="objectiveText">Recover 3 supply caches, then reach the extraction beacon.</span></div><div class="objectives" id="objectives"><span class="objective-step active"><i>01</i><b>SUPPLIES</b><em id="cacheCount">0 / 3</em></span><span class="step-line"></span><span class="objective-step"><i>02</i><b>EXTRACT</b><em>LOCKED</em></span></div><div class="threat-meter"><span>THREAT LEVEL</span><div class="threat-pips" id="threatPips"><i class="lit"></i><i class="lit"></i><i></i><i></i><i></i></div></div></section>
+    <main class="battlefield-wrap">
+      <canvas id="game" aria-label="Tactical battlefield game"></canvas>
+      <div class="map-label label-nw"><i>✦</i> OLD TOWN <span>SECTOR 03</span></div>
+      <div class="map-label label-se"><i class="beacon-dot"></i><span id="extractLabel">EXTRACTION · LOCKED</span></div>
+      <div class="toast" id="toast"></div>
+      <div class="briefing" id="briefing">
+        <div class="brief-card">
+          <div class="brief-kicker"><span>FIELD BRIEFING</span><span>07 NOV · 04:32</span></div>
+          <div class="brief-title">THE DEAD<br><em>HAVE CROSSED.</em></div>
+          <p>Blackthorn has fallen. Lead the survivors through the ruins, strip the supply caches, and get your people out before the next wave.</p>
+          <div class="brief-team"><div class="team-portraits"><span class="portrait p1">R</span><span class="portrait p2">M</span><span class="portrait p3">S</span><span class="portrait p4">✚</span></div><div><b>4 SURVIVORS</b><small>RANGER · GUARD · SCOUT · FIELD MEDIC</small></div></div>
+          <button class="deploy-button" id="deployButton"><span>DEPLOY SQUAD</span><b>↗</b></button>
+          <div class="brief-foot">WASD / EDGE · MOVE CAMERA <span>CLICK SELECT · RIGHT CLICK MOVE</span></div>
+        </div>
+      </div>
+      <div class="result-overlay hidden" id="resultOverlay"><div class="result-card"><div class="result-kicker">OPERATION COMPLETE</div><h2 id="resultTitle">THE LIVING<br><em>MAKE IT OUT.</em></h2><p id="resultMessage">Blackthorn will remember.</p><button class="deploy-button" id="restartButton"><span>PLAY AGAIN</span><b>↻</b></button></div></div>
+      <div class="selection-hint" id="selectionHint">4 SURVIVORS SELECTED <span>·</span> RIGHT CLICK TO MOVE</div>
+      <div class="wave-alert" id="waveAlert"><span>☠</span><div><b>THE HORDE IS MOVING</b><small>UNDEAD SIGNATURES DETECTED</small></div></div>
+    </main>
+    <footer class="command-deck">
+      <section class="squad-panel"><div class="panel-label">YOUR SQUAD <span id="squadCount">04 / 08</span></div><div class="unit-list" id="unitList"></div></section>
+      <section class="command-panel"><div class="command-top"><div><div class="panel-label">COMMAND</div><div class="selected-name" id="selectedName">ALL SURVIVORS <span>• READY</span></div></div><div class="selection-controls"><button id="selectAll" title="Select all survivors (A)">SELECT ALL</button><button id="holdButton" title="Hold position (H)">⌗ HOLD</button></div></div><div class="command-actions"><button class="action-card recruit-card" id="recruitButton"><span class="action-key">Q</span><span class="action-glyph">♜</span><span class="action-name">RECRUIT GUARD</span><span class="action-cost">35 <i>▰</i></span></button><button class="action-card med-card" id="medButton"><span class="action-key">E</span><span class="action-glyph">✚</span><span class="action-name">FIELD DRESSING</span><span class="action-cost">25 <i>▰</i></span></button><div class="action-tip" id="actionTip">Select a unit to inspect their condition.<br><b>TIP:</b> Medics heal nearby allies automatically.</div></div></section>
+      <section class="radar-panel"><div class="panel-label">TACTICAL MAP <span>BLACKTHORN</span></div><canvas id="minimap" width="180" height="104"></canvas><div class="radar-foot"><span><i class="key-dot"></i> FRIENDLY</span><span><i class="enemy-dot"></i> HOSTILE</span></div></section>
+      <section class="help-panel"><div class="panel-label">FIELD MANUAL <span>?</span></div><div><kbd>WASD</kbd> CAMERA <kbd>A</kbd> SELECT ALL</div><div><kbd>CLICK</kbd> SELECT <kbd>R-CLICK</kbd> MOVE / ATTACK</div><div><kbd>SPACE</kbd> PAUSE <kbd>H</kbd> HOLD POSITION</div><button id="soundButton">SOUND: <b>ON</b></button></section>
+    </footer>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
